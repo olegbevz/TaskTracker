@@ -1,0 +1,59 @@
+﻿<div class="panel panel-primary">
+    <div class="panel-heading">Task details</div>
+    <div class="panel-body" *ngIf="task">
+        <div class="form-horizontal">
+            <div class="form-group row">
+                <label for="id" class="col-sm-4 col-form-label">Id</label>
+                <div class="col-sm-8">
+                    <input type="text" readonly class="form-control-plaintext" id="id" [value]="task?.id" />
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="name" class="col-sm-4 col-form-label">Name</label>
+                <div class="col-sm-8">
+                    <input type="text" readonly class="form-control-plaintext" id="name" [value]="task?.name"/>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="description" class="col-sm-4 col-form-label">Description</label>
+                <div class="col-sm-8" >
+                    <span [innerHtml]="task?.description" style="overflow: hidden">
+                    </span>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="status" class="col-sm-4 col-form-label">Status</label>
+                <div class="col-sm-8">
+                    <input type="text" readonly class="form-control-plaintext" id="status" [value]="task?.status" />
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="priority" class="col-sm-4 col-form-label">Priority</label>
+                <div class="col-sm-8">
+                    <input type="text" readonly class="form-control-plaintext" id="priority" [value]="task?.priority" />
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="added" class="col-sm-4 col-form-label">Added</label>
+                <div class="col-sm-8">
+                    <input type="text" 
+                           readonly 
+                           class="form-control-plaintext" id="added" 
+                           [value]="task?.added | momentFormat:configuration.dateTimeFormat" />
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="edited" class="col-sm-4 col-form-label">Edited</label>
+                <div class="col-sm-8">
+                    <input type="text" 
+                           readonly 
+                           class="form-control-plaintext" id="edited" 
+                           [value]="task?.edited | momentFormat:configuration.dateTimeFormat" />
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="panel-body" *ngIf="task == null">
+        Task was not selected yet
+    </div>
+</div>

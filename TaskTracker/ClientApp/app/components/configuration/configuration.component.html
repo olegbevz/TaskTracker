@@ -1,0 +1,47 @@
+<h1>User settings</h1>
+
+<form #form="ngForm" class="configuration-form" (ngSubmit)="onSubmit()">
+    <div class="form-group row">
+        <label for="datetimeformat-select" class="col-sm-4 col-form-label">Date/time format</label>
+        <div class="col-sm-8">
+            <select id="datetimeformat-select"
+                    name="datetimeformat"
+                    class="form-control" 
+                    [(ngModel)]="configuration.dateTimeFormat">
+                <option value="YYYY-MM-DD HH:mm:ss">YYYY-MM-DD HH:mm:ss</option>
+                <option value="DD/MM/YYYY HH:mm:ss">DD/MM/YYYY HH:mm:ss</option>
+                <option value="DD/MM/YY HH:mm:ss">DD/MM/YY HH:mm:ss</option>
+                <option value="D MMMM YYYY HH:mm:ss">D MMMM YYYY HH:mm:ss</option>
+                <option value="MMM DD hh:mm:ss">MMM DD hh:mm:ss</option>
+            </select>
+            <small class="form-text text-muted">
+                Select format for date/time displayed on task list page. For example: {{ moment().format(configuration.dateTimeFormat) }}
+            </small>
+        </div>
+
+    </div>
+
+    <div class="form-group row">
+        <label for="altrowscolor-input" class="col-sm-4 col-form-label">Alt rows color</label>
+        <div class="col-sm-8">
+            <input id="altrowscolor-input"
+                   name="altrowscolor"
+                   class="form-control"
+                   required
+                   [(colorPicker)]="configuration.altRowsColor"
+                   [style.background]="configuration.altRowsColor"/>
+            <small class="form-text text-muted">
+                Select color for alt rows on task table
+            </small>
+        </div>
+    </div>
+
+    <div *ngIf="completed" class="alert alert-success" role="alert">
+        <!--<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>-->
+        Configuration was successfully saved
+    </div>
+
+    <button type="submit" class="btn btn-primary pull-right" [disabled]="!form.form.valid || submitting">Save</button>
+</form>

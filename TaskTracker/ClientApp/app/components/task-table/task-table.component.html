@@ -1,0 +1,87 @@
+﻿<div class="panel panel-primary">
+    <div class="panel-heading">Task table</div>
+    <div class="panel-body">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col">
+                    <div class="btn-group" role="group">
+                        <button type="button" 
+                                class="btn btn-secondary" 
+                                (click)="setTaskStatus()" 
+                                [ngClass]="{ 'active': taskStatus == undefined}">
+                            All
+                        </button>
+                        <button type="button" 
+                                class="btn btn-secondary"
+                                (click)="setTaskStatus('active')"
+                                [ngClass]="{ 'active': taskStatus === 'active'}">
+                            Active
+                        </button>
+                        <button type="button"
+                                class="btn btn-secondary"
+                                (click)="setTaskStatus('completed')"
+                                [ngClass]="{ 'active': taskStatus == 'completed'}">
+                            Completed
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <div >
+                        <div class="table-container">
+                            <table class="table table-bordered table-responsive">
+                                <thead>
+                                    <tr>
+                                        <th width="100px">#</th>
+                                        <th>
+                                            <a (click)="setSortOrder('name')">Name</a>
+                                        </th>
+                                        <th width="100px">
+                                            <a (click)="setSortOrder('priority')">Priority</a>
+                                        </th>
+                                        <th width="200px">
+                                            <a (click)="setSortOrder('added')">Added</a> 
+                                        </th>
+                                        <th width="200px">
+                                            <a (click)="setSortOrder('duration')">Time to complete</a> 
+                                        </th>
+                                        <th width="150px">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody infiniteScroll
+                                        (scrolled)="onTableScrollDown($event)"
+                                        (scrolledUp)="onTableScrollUp($event)"
+                                        [scrollWindow]="false">
+                                    <tr *ngFor="let task of taskTracker.tasks | async; let i = index" 
+                                        (click)="selectTask(task)" 
+                                        [ngStyle]="{'background-color': getRowColor(task, i)}">
+                                        <th width="100px" scope="row">{{ task.id }}</th>
+                                        <td >{{ task.name }}</td>
+                                        <td width="100px">{{ task.priority }}</td>
+                                        <td width="200px">{{ task.added | momentFormat:configuration.dateTimeFormat }}</td>
+                                        <td width="200px">{{ getTimeToComplete(task) | durationFormat }}</td>
+                                        <td width="150px" [ngSwitch]="task.status">
+                                            <button *ngSwitchCase="'active'" 
+                                                type="button" 
+                                                class="btn btn-success btn-sm"
+                                                (click)="onCompleteButtonClick(task)">
+                                                Complete
+                                            </button>
+                                            <button *ngSwitchCase="'completed'"
+                                                type="button"
+                                                class="btn btn-danger btn-sm"
+                                                (click)="onRemoveButtonClick(task)">
+                                                Remove
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

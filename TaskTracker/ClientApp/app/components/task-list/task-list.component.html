@@ -1,0 +1,16 @@
+<h1>Task list</h1>
+<div class="containe">
+    <div class="row">
+        <div class="col-sm-12">
+            <task-table [(selectedTask)]="selectedTask" 
+                        (selectedTaskChange)="onSelectedTaskChange($event)"
+                        (tasksReload)="onTasksReload()">
+            </task-table>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-6">
+            <task-details [task]="selectedTask"></task-details>
+        </div>
+    </div>
+</div>

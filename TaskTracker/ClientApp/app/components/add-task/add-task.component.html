@@ -1,0 +1,66 @@
+<h1>Add new task</h1>
+
+<form #form="ngForm" class="add-task-form" (ngSubmit)="onSubmit()">
+
+    <div class="form-group">
+        <label for="name-input">Name</label>
+        <input id="name-input"
+               name="name"
+               type="text" 
+               class="form-control"
+               [(ngModel)]="task.name"
+               required
+               placeholder="Enter name" />
+    </div>
+
+    <div class="form-group">
+        <label for="description-input">Description</label>
+        <textarea id="description-input" 
+               name="description" 
+               class="form-control description-textarea"
+               [(ngModel)]="task.description"
+               required 
+               placeholder="Enter description"></textarea>
+    </div>
+
+    <div class="form-group">
+        <label for="priority-input">Priority</label>
+        <div>
+            <ngb-rating [(rate)]="task.priority">
+                <ng-template let-fill="fill">
+                    <span class="star" [class.filled]="fill === 100">&#9733;</span>
+                </ng-template>
+            </ngb-rating>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="duration-input">Time to complete</label>
+        <ngb-timepicker id="duration-input" name="duration"
+                [ngModel]="task.duration | ngbTimeStruct"
+                (ngModelChange)="onDurationChange($event)"
+                [seconds]="true" 
+                [hourStep]="1" 
+                [minuteStep]="5" 
+                [secondStep]="15">
+        </ngb-timepicker>
+    </div>
+
+    <div *ngIf="completed" class="alert alert-success" role="alert">
+        <!--<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>-->
+        Task was successfully added to the list
+    </div>
+
+    <div *ngIf="faulted" class="alert alert-danger" role="alert">
+        <!--<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>-->
+        Task was not added to the list due to internal server error
+    </div>
+
+    <button type="submit" class="btn btn-primary pull-right" [disabled]="!form.form.valid || submitting">Create task</button>
+</form>
+
+
